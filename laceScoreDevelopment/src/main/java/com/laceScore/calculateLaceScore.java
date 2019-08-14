@@ -49,7 +49,7 @@ public class calculateLaceScore {
 
 		//Build the SparkSession, CSVData with valid rows for the Measure specified
 		SparkSession spark = SparkSession.builder().appName("laceScore").master("local[*]")
-				.config("spark.sql.warehouse.dir", "file:///D:/spark/grayMatter/laceScoreDevelopment")
+				.config("spark.sql.warehouse.dir", ".")
 				.config("spark.debug.maxToStringFields", 100).getOrCreate();
         Dataset<Row> csvData = spark.read().format("csv").option("header", "true").option("inferSchema", "true")
 				.load("Sample_Data_2016.csv");
