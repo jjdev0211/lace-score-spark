@@ -129,7 +129,12 @@ public class calculateLaceScore {
 				+ "WHEN ED_visits IN (0,1,2,3) THEN ED_visits "
 				+ "WHEN ED_visits >= 4 THEN 4 "
 				+ "ELSE 0 "
-			+ "END) + Inpatient_visits  AS LACE_SCORE FROM laceScoreTable"); 
+			+ "END) + Inpatient_visits  AS LACE_SCORE FROM laceScoreTable");
+		csvSqlYesCount.createOrReplaceTempView("laceScoreView");
+		Dataset<Row> laceScoreCount = spark.sql("SELECT * from laceScoreView where LACE_SCORE > 9");
+		Long laceScoreGtNine = laceScoreCount.count();
+		Long rowCount = csvSqlYesCount.count();
+		Double measureScore = ((double)laceScoreGtNine/rowCount);
 		/*Dataset<Row> csvSqlYesCount = spark.sql("SELECT (CASE "
 				+ "WHEN LengthofStay < 1 THEN 0 "
 				+ "WHEN LengthofStay IN (1,2,3) THEN LengthofStay "
@@ -148,7 +153,9 @@ public class calculateLaceScore {
 				+ "WHEN ED_visits >= 4 THEN 4 "
 				+ "ELSE 0 "
 			+ "END) + Inpatient_visits  AS LACE_SCORE, FROM csvTableWithYesCount"); */
-		csvSqlYesCount.show();
+		//laceScoreCount.show();
+		System.out.println("Rowcount is "+ rowCount + "Lace Score > 9 " + laceScoreGtNine);
+		System.out.println("Final Score is " + measureScore);
 
 	}
 
