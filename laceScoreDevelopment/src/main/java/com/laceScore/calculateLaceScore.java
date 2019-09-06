@@ -31,7 +31,7 @@ public class calculateLaceScore {
 		// TODO Auto-generated method stub
 		Logger.getLogger("org.apache").setLevel(Level.WARN);
 
-		//Initialzing Spark Context and getting the measure
+		//Initialzing Spark Context and getting the measure test
 		String measureName = args[0];
 		SparkConf conf = new SparkConf().setAppName("laceScore").setMaster("local[*]").set("spark.driver.allowMultipleContexts", "true");
 		JavaSparkContext sc = new JavaSparkContext(conf);
